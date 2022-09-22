@@ -114,10 +114,22 @@ class Reviewer(Mentor):
         return res
 
 
+def av_rate(persons, course):
+    total_score = []
+    for person in persons:
+        if course in list(person.grades.keys()):
+            score = person.grades[course]
+            total_score += score
+        else:
+            continue
+    av_total_score = round(int(sum(total_score)) / len(total_score), 1)
+    print(f"средняя оценка по курсу {course} - {av_total_score}")
+
+
 petr_vasiliev = Student('Пётр', 'Васильев', 'муж')
 petr_vasiliev.add_courses('Stage_1')
 petr_vasiliev.grades = {'Stage_1': [8, 9, 10]}
-petr_vasiliev.courses_in_progress = ['Stage_2', 'Stage_3']
+petr_vasiliev.courses_in_progress = ['Stage_1', 'Stage_2', 'Stage_3']
 
 olga_smirnova = Student('Ольга', 'Смирнова', 'жен')
 olga_smirnova.add_courses('Stage_1')
@@ -139,8 +151,10 @@ vladimir_volkov.courses_attached = ['Stage_1', 'Stage_2', 'Stage_3', 'Stage_4']
 
 petr_vasiliev.rate_lec(sergey_semenov, 'Stage_3', 8)
 petr_vasiliev.rate_lec(sergey_semenov, 'Stage_3', 9)
+petr_vasiliev.rate_lec(sergey_semenov, 'Stage_1', 8)
 olga_smirnova.rate_lec(sergey_semenov, 'Stage_3', 9)
 olga_smirnova.rate_lec(sergey_semenov, 'Stage_3', 10)
+
 
 petr_vasiliev.rate_lec(svetlana_stepanova, 'Stage_2', 10)
 petr_vasiliev.rate_lec(svetlana_stepanova, 'Stage_2', 8)
@@ -157,17 +171,29 @@ vladimir_volkov.rate_hw(olga_smirnova, 'Stage_3', 9)
 vladimir_volkov.rate_hw(olga_smirnova, 'Stage_4', 8)
 vladimir_volkov.rate_hw(olga_smirnova, 'Stage_4', 10)
 
-print(petr_vasiliev)
-print()
-print(olga_smirnova)
-print()
-print(sergey_semenov)
-print()
-print(svetlana_stepanova)
-print()
-print(vladimir_volkov)
-print()
-print(natalia_orlova)
-print()
-print(petr_vasiliev < olga_smirnova)
-print(sergey_semenov > svetlana_stepanova)
+# print(petr_vasiliev)
+# print(petr_vasiliev.grades)
+# print()
+# print(olga_smirnova)
+# print(olga_smirnova.grades)
+# print()
+# print(sergey_semenov)
+# print(sergey_semenov.grades)
+# print()
+# print(svetlana_stepanova)
+# print(svetlana_stepanova.grades)
+# print()
+# print(vladimir_volkov)
+# print()
+# print(natalia_orlova)
+# print()
+# print(petr_vasiliev < olga_smirnova)
+# print(sergey_semenov > svetlana_stepanova)
+
+students_list = [petr_vasiliev, olga_smirnova]
+lecturers_list = [sergey_semenov, svetlana_stepanova]
+course = str(input('Введите название курса: '))
+print('Для студентов')
+av_rate(students_list, course)
+print('Для преподавателей')
+av_rate(lecturers_list, course)
