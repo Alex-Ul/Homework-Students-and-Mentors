@@ -82,7 +82,17 @@ class Lecturer(Mentor):
         if not isinstance(other, Lecturer):
             print('Нет в списке лекторов')
             return
-        return self.__av_grade < other.__av_grade
+        sum_av_self = 0
+        for course in self.grades:
+            course_av_self = sum(self.grades.get(course)) / len(self.grades.get(course))
+            sum_av_self += course_av_self
+        res_self = round((sum_av_self / len(self.grades)), 1)
+        sum_av_other = 0
+        for course in other.grades:
+            course_av_other = sum(other.grades.get(course)) / len(other.grades.get(course))
+            sum_av_other += course_av_other
+        res_other = round((sum_av_other / len(other.grades)), 1)
+        return res_self > res_other
 
     def __str__(self):
         res = f"""Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {self.__av_grade()}"""
@@ -160,4 +170,4 @@ print()
 print(natalia_orlova)
 print()
 print(petr_vasiliev < olga_smirnova)
-
+print(sergey_semenov > svetlana_stepanova)
